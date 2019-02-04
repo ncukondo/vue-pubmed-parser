@@ -15,32 +15,55 @@
     </div>
     <h2 v-if="showing">Short</h2>
     <p>{{quoteShortText}}</p>
+    <p>
+      <citation-unit
+        v-for="(pmid,index) in _pmids"
+        :key="index+1"
+        class="citationunit"
+        :variants="{index:index+1, total:_pmids.length}"
+        :format="shortformat"
+        :value="pmid"
+      />
+    </p>
     <h2 v-if="showing">Long</h2>
-    <p>{{quoteLongText}}</p>
+    <p>
+      <citation-unit
+        v-for="(pmid,index) in _pmids"
+        :key="index+1"
+        class="citationunit"
+        :variants="{index:index+1, total:_pmids.length}"
+        :format="longformat"
+        :value="pmid"
+      />
+    </p>
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
-import { PubmedParser } from "@ncukondo/pubmed-parser";
+import { Component, Vue, Prop } from "vue-property-decorator";
+import CitationUnit from "@/components/citation-unit.vue";
 import { Input } from "element-ui";
+
+const LONG_FORMAT =
+  '${ total>1 ? index+") ":""}${makeAuthorList()}. ${title}. ${year} ${month};${vol}${ issue ? "("+issue+")" : ""}:${page}${ pmid ? " Cited in PubMed; PMID:"+pmid : ""}.';
+const SHORT_FORMAT =
+  '${ total>1 ? index+") ":""} ${abbrej}. ${year}${month ? " "+ month : ""};${vol}${ issue ? "("+issue+")" : ""}:${page}${ pmid ? " pmid:" + pmid : ""}.';
 
 @Component({
   components: {
-    Input
+    Input,
+    CitationUnit
   }
 })
 export default class Home extends Vue {
-  private _parser?: PubmedParser;
   quoteLongText = "";
   quoteShortText = "";
   value = "";
   showing = false;
+  _pmids = new Array<string>();
 
-  private LONG_FORMAT =
-    '${makeAuthorList()}. ${title}. ${year} ${month};${vol}${ issue ? "("+issue+")" : ""}:${page}${ pmid ? " Cited in PubMed; PMID:"+pmid : ""}.';
-  private SHORT_FORMAT =
-    '${abbrej}. ${year}${month ? " "+ month : ""};${vol}${ issue ? "("+issue+")" : ""}:${page}${ pmid ? " pmid:" + pmid : ""}.';
+  @Prop({ default: LONG_FORMAT }) longformat?: string;
+  @Prop({ default: SHORT_FORMAT }) shortformat?: string;
 
   async analyze(value: string) {
     this.showing = false;
@@ -49,16 +72,8 @@ export default class Home extends Vue {
       this.quoteLongText = "";
       return;
     }
-    this.quoteLongText = `processing.....PMID ${value}`;
-    this.quoteShortText = "";
-    try {
-      const parser = await PubmedParser.fromPmid(value);
-      this.quoteShortText = parser.format(this.SHORT_FORMAT);
-      this.quoteLongText = parser.format(this.LONG_FORMAT);
-      this.showing = true;
-    } catch (e) {
-      this.quoteLongText = `error: ${e}`;
-    }
+    this.showing = true;
+    this._pmids = value.split(/\n|\r\n|\r/g);
   }
 }
 </script>
@@ -73,6 +88,10 @@ h2 {
 
 .label {
   margin-right: 1em;
+}
+
+.citationunit {
+  margin-bottom: 0.5em;
 }
 
 .container {

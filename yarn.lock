@@ -683,10 +683,10 @@
     call-me-maybe "^1.0.1"
     glob-to-regexp "^0.3.0"
 
-"@ncukondo/pubmed-parser@^0.1.4":
-  version "0.1.4"
-  resolved "http://localhost:4873/@ncukondo%2fpubmed-parser/-/pubmed-parser-0.1.4.tgz#288d758e0e6fe1854c35761e900138d5ab4db8bd"
-  integrity sha512-lXNiRAXmSdljIUkFfkIGMkV8KB46lHfnAn5V/GHtRtczwJ5t9D+Xd2QYcexCKKdkqKQYFmszpWPJWZ7Qp89Ndg==
+"@ncukondo/pubmed-parser@^0.1.5":
+  version "0.1.5"
+  resolved "http://localhost:4873/@ncukondo%2fpubmed-parser/-/pubmed-parser-0.1.5.tgz#d340093cd0264dd3a853bab97a353d070600d4cd"
+  integrity sha512-z2vwq9ZRzDsg5zpHAmQYdyTGadrKeuqIJjMxYVLu9wHYAeS20NQxSFJwFYBJbLqdK4/R/pLX4mokgRlgcnLDxg==
   dependencies:
     "@types/cheerio" "^0.22.10"
     axios "^0.18.0"
