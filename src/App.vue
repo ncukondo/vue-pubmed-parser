@@ -1,25 +1,51 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+    <div class="container">
+      <h1>PMID2Citation</h1>
+      <home/>
     </div>
-    <router-view/>
   </div>
 </template>
-<style lang="stylus">
-#app
-  font-family 'Avenir', Helvetica, Arial, sans-serif
-  -webkit-font-smoothing antialiased
-  -moz-osx-font-smoothing grayscale
-  text-align center
-  color #2c3e50
 
-#nav
-  padding 30px
-  a
-    font-weight bold
-    color #2c3e50
-    &.router-link-exact-active
-      color #42b983
+<script>
+import HelloWorld from "./components/HelloWorld.vue";
+import Home from "./views/Home";
+
+export default {
+  name: "app",
+  components: {
+    HelloWorld,
+    Home
+  }
+};
+</script>
+<style lang="stylus" scoped>
+#app {
+  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: #2c3e50;
+}
+
+@media (min-width: 60em) {
+  #app {
+    background-color: #c0c0c0;
+    padding-top: 2em;
+    margin: 0;
+    min-height: 100vh;
+  }
+
+  .container {
+    margin-left: 15em;
+    margin-right: 15em;
+    background-color: white;
+    padding: 1em;
+    min-height: 80vh;
+    border-radius: 1em;
+  }
+}
+
+h1 {
+  color: #37bc37;
+}
 </style>
