@@ -45,9 +45,9 @@ import CitationUnit from "@/components/citation-unit.vue";
 import { Input } from "element-ui";
 
 const LONG_FORMAT =
-  '${ total>1 ? index+") ":""}${makeAuthorList()}. ${title}. ${year} ${month};${vol}${ issue ? "("+issue+")" : ""}:${page}${ pmid ? " Cited in PubMed; PMID:"+pmid : ""}.';
+  '${ total>1 ? index+") ":""}${makeAuthorList()}. ${title}. ${journal}. ${year}${month ? " "+ month : ""};${vol}${ issue ? "("+issue+")" : ""}:${page}${ pmid ? " Cited in PubMed; PMID:"+pmid : ""}.';
 const SHORT_FORMAT =
-  '${ total>1 ? index+") ":""} ${abbrej}. ${year}${month ? " "+ month : ""};${vol}${ issue ? "("+issue+")" : ""}:${page}${ pmid ? " pmid:" + pmid : ""}.';
+  '${ total>1 ? index+") ":""} ${abbrej}. ${year};${vol}${ issue ? "("+issue+")" : ""}:${page}${ pmid ? " pmid:" + pmid : ""}.';
 
 @Component({
   components: {
@@ -56,8 +56,6 @@ const SHORT_FORMAT =
   }
 })
 export default class Home extends Vue {
-  quoteLongText = "";
-  quoteShortText = "";
   value = "";
   showing = false;
   _pmids = new Array<string>();
@@ -68,8 +66,7 @@ export default class Home extends Vue {
   async analyze(value: string) {
     this.showing = false;
     if (!value) {
-      this.quoteShortText = "";
-      this.quoteLongText = "";
+      this._pmids = new Array<string>();
       return;
     }
     this.showing = true;

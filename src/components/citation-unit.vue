@@ -7,7 +7,7 @@ import { Component, Vue, Prop, Watch, Emit } from "vue-property-decorator";
 import { PubmedParser } from "@ncukondo/pubmed-parser";
 
 const DEFAULT_FORMAT =
-  '${makeAuthorList()}. ${title}. ${year} ${month};${vol}${ issue ? "("+issue+")" : ""}:${page}${ pmid ? " Cited in PubMed; PMID:"+pmid : ""}.';
+  '${makeAuthorList()}. ${title}. ${journal}. ${year}${month ? " "+ month : ""};${vol}${ issue ? "("+issue+")" : ""}:${page}${ pmid ? " Cited in PubMed; PMID:"+pmid : ""}.';
 
 @Component({})
 export default class CitationUnit extends Vue {
