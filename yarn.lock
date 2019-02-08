@@ -683,14 +683,19 @@
     call-me-maybe "^1.0.1"
     glob-to-regexp "^0.3.0"
 
-"@ncukondo/pubmed-parser@^0.1.5":
-  version "0.1.5"
-  resolved "http://localhost:4873/@ncukondo%2fpubmed-parser/-/pubmed-parser-0.1.5.tgz#d340093cd0264dd3a853bab97a353d070600d4cd"
-  integrity sha512-z2vwq9ZRzDsg5zpHAmQYdyTGadrKeuqIJjMxYVLu9wHYAeS20NQxSFJwFYBJbLqdK4/R/pLX4mokgRlgcnLDxg==
+"@ncukondo/pubmed-parser@^0.1.13":
+  version "0.1.13"
+  resolved "http://localhost:4873/@ncukondo%2fpubmed-parser/-/pubmed-parser-0.1.13.tgz#3a61ba64b26a1a31c52d91b4e761ce411350e695"
+  integrity sha512-2nKlQpDvPd9lw/GzbZTRHtCzKBttNG3VkSg6ztX6Gl9pxgtl7gZRiQtL6JKHhZOmTJwn7YPk4ArW3kHCCw6ZYA==
   dependencies:
     "@types/cheerio" "^0.22.10"
     axios "^0.18.0"
     cheerio "^1.0.0-rc.2"
+
+"@ncukondo/ts-clip@^0.1.0":
+  version "0.1.0"
+  resolved "http://localhost:4873/@ncukondo%2fts-clip/-/ts-clip-0.1.0.tgz#6b326aaa1c744d02c8e46c4b13f61fc5803465cc"
+  integrity sha512-483fYeCow6k3TcjL6pfmKZSIduqxdGq9cza3AxR9FBW0q+S5E2m+QUvjYjVhKotegXDhFBB1xUZ8lwJieYUy0w==
 
 "@nodelib/fs.stat@^1.1.2":
   version "1.1.3"

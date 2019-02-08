@@ -2,7 +2,7 @@
   <div class="home">
     <div class="container">
       <div class="label">Input PMID</div>
-      <div class="inputparent">
+      <div class="inputparent" style="width: 30em;">
         <el-input
           placeholder="PMID hear"
           type="textarea"
@@ -14,7 +14,6 @@
       </div>
     </div>
     <h2 v-if="showing">Short</h2>
-    <p>{{quoteShortText}}</p>
     <p>
       <citation-unit
         v-for="(pmid,index) in _pmids"
@@ -76,11 +75,12 @@ export default class Home extends Vue {
 </script>
 <style lang="stylus" scoped>
 .inputparent {
-  max-width: 20em;
 }
 
 h2 {
   color: #37bc37;
+  margin-top: 1em;
+  margin-bottom: 0.5em;
 }
 
 .label {

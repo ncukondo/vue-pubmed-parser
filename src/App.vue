@@ -23,6 +23,8 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
+  margin-left: 1em;
+  margin-right: 1em;
 }
 
 @media (min-width: 60em) {
@@ -37,13 +39,14 @@ export default {
     margin-left: 15em;
     margin-right: 15em;
     background-color: white;
-    padding: 1em;
-    min-height: 80vh;
+    padding: 1em 1em 3em 1em;
     border-radius: 1em;
   }
 }
 
 h1 {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
   color: #37bc37;
 }
 </style>
