@@ -9,9 +9,10 @@
     "test:unit": "vue-cli-service test:unit"
   },
   "dependencies": {
-    "@ncukondo/pubmed-parser": "^0.1.13",
+    "@ncukondo/pubmed-parser": "^0.1.14",
     "@ncukondo/ts-clip": "^0.1.0",
     "element-ui": "^2.4.5",
+    "firebase": "^5.8.2",
     "register-service-worker": "^1.5.2",
     "vue": "^2.5.22",
     "vue-class-component": "^6.0.0",

@@ -1,7 +1,7 @@
 <template>
   <div class="unit">
     {{citationText}}
-    <el-button v-if="canShow" @click="copyToClip(citationText)" type="text">clip</el-button>
+    <el-button v-if="showClip" @click="copyToClip(citationText)" type="text">clip</el-button>
   </div>
 </template>
 
@@ -29,7 +29,8 @@ export default class CitationUnit extends Vue {
   citationText = "";
   private _parser?: PubmedParser;
   _valid = false;
-  canShow = false;
+  showClip = false;
+
   @Prop({ default: "" }) value?: string;
   @Prop({ default: {} }) variants?: { [key: string]: string };
   @Prop({
@@ -40,6 +41,11 @@ export default class CitationUnit extends Vue {
   @Watch("value", { immediate: true })
   onValueChange(newValue: string, oldValue: string): void {
     this.analyze(newValue);
+  }
+
+  @Watch("format", { immediate: true })
+  onFormatChange(newValue: string, oldValue: string): void {
+    if (this.value) this.analyze(this.value);
   }
 
   @Emit("changevalidity")
@@ -66,7 +72,7 @@ export default class CitationUnit extends Vue {
   }
 
   async analyze(value: string) {
-    this.canShow = false;
+    this.showClip = false;
     if (!value) {
       if (this._valid) this.changeValidity(false);
       this.citationText = "";
@@ -80,7 +86,7 @@ export default class CitationUnit extends Vue {
         this.variants ? this.variants : {}
       );
       if (!this._valid) this.changeValidity(true);
-      this.canShow = true;
+      this.showClip = true;
     } catch (e) {
       if (this._valid) this.changeValidity(false);
       this.citationText = `error: ${e}`;
@@ -89,6 +95,10 @@ export default class CitationUnit extends Vue {
 }
 </script>
 <style lang="stylus">
+.citationunit {
+  margin-bottom: 0.5em;
+}
+
 </style>
 
 

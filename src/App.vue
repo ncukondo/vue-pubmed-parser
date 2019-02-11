@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <div class="container">
-      <h1>PMID2Citation</h1>
+      <h1>Pubmed2Citation</h1>
       <home/>
     </div>
   </div>

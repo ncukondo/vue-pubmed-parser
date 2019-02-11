@@ -1,7 +1,8 @@
 {
   "name": "PMID2Citation",
   "short_name": "PMID2Citation",
-  "icons": [{
+  "icons": [
+    {
       "src": "./img/icons/android-chrome-192x192.png",
       "sizes": "192x192",
       "type": "image/png"
