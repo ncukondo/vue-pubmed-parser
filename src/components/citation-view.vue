@@ -21,11 +21,12 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop, Watch } from "vue-property-decorator";
+import { Component, Vue, Prop, Watch, Emit } from "vue-property-decorator";
 import CitationUnit from "@/components/citation-unit.vue";
 
 type tagType = "format" | "header" | "text";
-type tagLineType = { tag: tagType; content: string };
+const funcSet: Set<string> = new Set(["pagetitle"]);
+type tagLineType = { tag: string; content: string };
 
 @Component({
   components: {
@@ -42,6 +43,9 @@ export default class CitationView extends Vue {
     this.lines = this.text2FormatList(newvalue);
   }
 
+  @Emit("func")
+  onFunction(name: string, content: string) {}
+
   text2FormatList(text: string): tagLineType[] {
     text = text.trim();
     if (!text) return new Array<tagLineType>();
@@ -54,6 +58,9 @@ export default class CitationView extends Vue {
       .map(line => {
         const ma = /^\:([a-zA-Z][\w]+)\:(.*)$/gm.exec(line);
         if (ma && ma.length > 2) {
+          if (funcSet.has(ma[1])) {
+            this.onFunction(ma[1], ma[2]);
+          }
           return { tag: ma[1] as tagType, content: ma[2] as string };
         }
         return { tag: "format" as tagType, content: line };

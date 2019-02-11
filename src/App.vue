@@ -1,9 +1,6 @@
 <template>
   <div id="app">
-    <div class="container">
-      <h1>Pubmed2Citation</h1>
-      <home/>
-    </div>
+    <home/>
   </div>
 </template>
 
@@ -34,19 +31,5 @@ export default {
     margin: 0;
     min-height: 100vh;
   }
-
-  .container {
-    margin-left: 15em;
-    margin-right: 15em;
-    background-color: white;
-    padding: 1em 1em 3em 1em;
-    border-radius: 1em;
-  }
-}
-
-h1 {
-  margin-top: 0.5em;
-  margin-bottom: 0.5em;
-  color: #37bc37;
 }
 </style>
