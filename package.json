@@ -8,7 +8,7 @@
     "lint": "vue-cli-service lint",
     "test:unit": "vue-cli-service test:unit",
     "prepublish": "yarn build",
-    "push": "git commit -a -m $comment"
+    "commit": "git commit -a -m $*"
   },
   "dependencies": {
     "@ncukondo/pubmed-parser": "^0.1.15",
