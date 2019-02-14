@@ -31,22 +31,14 @@
 import { Component, Vue, Prop } from "vue-property-decorator";
 import CitationView from "@/components/citation-view.vue";
 import FormatEditor from "@/components/format-editor.vue";
-import { loadFormat } from "@/lib/format-loader";
+import { loadFormat, DEFAULT_FORMAT } from "@/lib/format-loader";
 import { Input } from "element-ui";
 import packageJson from "../../package.json";
+import { firebaseApp } from "@/lib/firebase.config";
+import { auth } from "@/lib/firebase.auth";
+import { throttle } from "lodash-decorators";
 
-const SHORT_FORMAT =
-  '${abbrej}. ${year};${vol}${ issue ? "("+issue+")" : ""}:${page}${ pmid ? " pmid:" + pmid : ""}.';
-const LONG_FORMAT =
-  '${ total>1 ? index+") ":""}${makeAuthorList(" ,",6)}. ${title}. ${journal}. ${year}${month ? " "+ month : ""};${vol}${ issue ? "("+issue+")" : ""}:${page}${ pmid ? " Cited in PubMed; PMID:"+pmid : ""}.';
-const DEFAULT_FORMAT = `:title:Short
-${SHORT_FORMAT}
-
-:title:Long
-${LONG_FORMAT}
-
-:pagetitle:Pubmed2Citation
-`;
+const DEFAULT_PAGE_TITLE = "Pubmed2Citation";
 
 @Component({
   components: {
@@ -62,8 +54,9 @@ export default class Home extends Vue {
   showeditor = false;
   version = packageJson.version;
   repositoryUrl = packageJson.repository.url;
-  pageTitle = "Pubmed2Citation";
+  pageTitle = DEFAULT_PAGE_TITLE;
 
+  @throttle(1000)
   async analyze(value: string) {
     if (!value) {
       this.pmids = new Array<string>();
@@ -73,9 +66,8 @@ export default class Home extends Vue {
   }
 
   onFormatFunc(funcName: string, content: string) {
-    console.log(`onFormatFunc funcname:${funcName}, content${content}`);
     if (funcName == "pagetitle") {
-      this.pageTitle = content;
+      this.pageTitle = content.trim() || DEFAULT_PAGE_TITLE;
       document.title = this.pageTitle;
     }
   }
@@ -91,6 +83,11 @@ export default class Home extends Vue {
       if (format) this.format = format;
     }
     document.title = this.pageTitle;
+    /*auth.onAuthStateChanged(user => {
+      if (user) {
+        console.log(`User:` + JSON.stringify(user, null, "  "));
+      }
+    });*/
   }
 }
 </script>
@@ -129,12 +126,6 @@ export default class Home extends Vue {
   height: 1em;
   width: 1em;
   margin: 0em 0.5em 0 0.5em;
-}
-
-h1 {
-  margin-top: 0.5em;
-  margin-bottom: 0.5em;
-  color: #37bc37;
 }
 </style>
 

@@ -30,9 +30,17 @@
                 type="primary"
                 :loading="proccessingUrl"
                 :disabled="proccessingUrl"
-                v-show="formatUrl=='' && editted"
+                v-show="isReadyToSave"
                 round
               >Make URL for this format</el-button>
+            </transition>
+            <transition name="downup">
+              <el-button
+                style="margin-bottom:1em;"
+                @click="resetFormat"
+                type="text"
+                v-show="isReadyToSave"
+              >Reset format</el-button>
             </transition>
             <transition name="updown">
               <el-card v-show="formatUrl!==''" shadow="always" style="margin:0.5em;">
@@ -60,7 +68,7 @@
 <script lang="ts">
 import { Component, Vue, Prop, Emit, Watch } from "vue-property-decorator";
 import CitationUnit from "@/components/citation-unit.vue";
-import { makeUrl } from "@/lib/format-loader";
+import { makeUrl, DEFAULT_FORMAT, getFormatForUrl } from "@/lib/format-loader";
 import { Button, Card } from "element-ui";
 import { copyToClip } from "@ncukondo/ts-clip";
 
@@ -75,21 +83,30 @@ export default class FormatEditor extends Vue {
   showeditor = false;
   proccessingUrl = false;
   formatUrl = "";
-  editted = false;
+  defaultFormat = DEFAULT_FORMAT;
   @Prop({ required: true }) value?: string;
+
+  get formatForUrl(): string {
+    return getFormatForUrl();
+  }
+
+  get isReadyToSave(): boolean {
+    return this.formatUrl == "" && this.value !== this.formatForUrl;
+  }
+
+  resetFormat() {
+    this.onInput(this.formatForUrl);
+  }
 
   @Watch("value")
   setValue(newvalue: string, oldvalue: string) {
     this.formatUrl = "";
-    this.editted = true;
   }
 
   @Emit("input")
   onInput(value: string) {}
 
-  mounted() {
-    this.editted = false;
-  }
+  mounted() {}
 
   async makeUrl(): Promise<string> {
     this.proccessingUrl = true;

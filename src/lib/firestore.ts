@@ -1,10 +1,25 @@
-import { config } from './firebase.config';
-import * as firebase from 'firebase/app';
+import { firebaseApp } from './firebase.config';
 import 'firebase/firestore';
 
 export { firestore };
 
-// Initialize Firebase
-const firebaseApp = firebase.initializeApp(config);
-
 const firestore = firebaseApp.firestore();
+
+try {
+  firestore
+    .enablePersistence()
+    .then(() => {
+      // Initialize Cloud Firestore through firebase
+    })
+    .catch((err) => {
+      if (err.code === 'failed-precondition') {
+        // Multiple tabs open, persistence can only be enabled
+        // in one tab at a a time.
+        // ...
+      } else if (err.code === 'unimplemented') {
+        // The current browser does not support all of the
+        // features required to enable persistence
+        // ...
+      }
+    });
+} catch (e) {}

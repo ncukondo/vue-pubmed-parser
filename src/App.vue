@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <home/>
+    <router-view></router-view>
   </div>
 </template>
 
@@ -14,7 +14,7 @@ export default {
   }
 };
 </script>
-<style lang="stylus" scoped>
+<style lang="stylus">
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -22,6 +22,18 @@ export default {
   color: #2c3e50;
   margin-left: 1em;
   margin-right: 1em;
+}
+
+h1 {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+  color: #37bc37;
+}
+
+h2 {
+  color: #37bc37;
+  margin-top: 1em;
+  margin-bottom: 0.5em;
 }
 
 @media (min-width: 60em) {

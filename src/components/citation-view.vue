@@ -69,10 +69,5 @@ export default class CitationView extends Vue {
 }
 </script>
 <style lang="stylus" scoped>
-h2 {
-  color: #37bc37;
-  margin-top: 1em;
-  margin-bottom: 0.5em;
-}
 </style>
 

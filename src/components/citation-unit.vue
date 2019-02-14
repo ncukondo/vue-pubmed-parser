@@ -1,6 +1,6 @@
 <template>
   <div class="unit">
-    {{citationText}}
+    <span v-html="citationText"></span>
     <el-button v-if="showClip" @click="copyToClip(citationText)" type="text">clip</el-button>
   </div>
 </template>
@@ -8,21 +8,12 @@
 <script lang="ts">
 import { Component, Vue, Prop, Watch, Emit } from "vue-property-decorator";
 import { PubmedParser } from "@ncukondo/pubmed-parser";
-import { copyToClip } from "@ncukondo/ts-clip";
+import { copyToClip, copyHtmlToClip } from "@ncukondo/ts-clip";
+import { DEFAULT_FORMAT } from "@/lib/format-loader";
+import { escapeHtml, removeTag } from "@/lib/html-escape";
 import { Message } from "element-ui";
 
-function escapeHtml(str: string): string {
-  str = str.replace(/&/g, "&amp;");
-  str = str.replace(/>/g, "&gt;");
-  str = str.replace(/</g, "&lt;");
-  str = str.replace(/"/g, "&quot;");
-  str = str.replace(/'/g, "&#x27;");
-  str = str.replace(/`/g, "&#x60;");
-  return str;
-}
-
-const DEFAULT_FORMAT =
-  '${makeAuthorList()}. ${title}. ${journal}. ${year}${month ? " "+ month : ""};${vol}${ issue ? "("+issue+")" : ""}:${page}${ pmid ? " Cited in PubMed; PMID:"+pmid : ""}.';
+const allowTags = ["a", "i", "b", "sub", "sup", "span"];
 
 @Component({})
 export default class CitationUnit extends Vue {
@@ -58,14 +49,14 @@ export default class CitationUnit extends Vue {
   }
 
   copyToClip(text: string) {
-    copyToClip(text);
+    copyHtmlToClip(text);
     this.$message({
       showClose: true,
       dangerouslyUseHTMLString: true,
       message:
         "Paste to Clipboard<br>" +
         '<small style="font-size:0.6em;">' +
-        escapeHtml(text) +
+        removeTag(text) +
         "</small>",
       type: "success"
     });
@@ -81,9 +72,12 @@ export default class CitationUnit extends Vue {
     this.citationText = `processing.....PMID ${value}`;
     try {
       const parser = await PubmedParser.from(value);
-      this.citationText = parser.format(
-        this.format ? this.format : DEFAULT_FORMAT,
-        this.variants ? this.variants : {}
+      this.citationText = escapeHtml(
+        parser.format(
+          this.format ? this.format : DEFAULT_FORMAT,
+          this.variants ? this.variants : {}
+        ),
+        allowTags
       );
       if (!this._valid) this.changeValidity(true);
       this.showClip = true;
@@ -98,7 +92,6 @@ export default class CitationUnit extends Vue {
 .citationunit {
   margin-bottom: 0.5em;
 }
-
 </style>
 
 

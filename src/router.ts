@@ -14,6 +14,12 @@ export default new Router({
       component: Home,
     },
     {
+      path: '/login',
+      name: 'login',
+      component: () =>
+        import(/* webpackChunkName: "login" */ './views/login.vue'),
+    },
+    {
       path: '/format/:formatid',
       name: 'formated',
       component: Home,
