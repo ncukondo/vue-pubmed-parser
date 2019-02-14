@@ -9,7 +9,7 @@
     "test:unit": "vue-cli-service test:unit",
     "prepublish": "yarn build",
     "git": "git add . && git commit -m",
-    "postgit": "git push --all"
+    "postgit": "git push origin master"
   },
   "dependencies": {
     "@ncukondo/pubmed-parser": "^0.1.15",
